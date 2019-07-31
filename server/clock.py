@@ -1,12 +1,7 @@
-from time import sleep
-
-from _thread import start_new_thread
-
 frequency = 20
-data = '00101000101000101001001101011011101010110'
 
-# bool(a) != bool(b) equals a xor b
-
+# simula um clock dado uma frequencia
+# nao sei se precisaremos disso
 def clock(freq):
     sleep_time = 1/freq
     while True:
