@@ -1,14 +1,9 @@
-import winsound
-
-#params: frequency, time (in ms)
-winsound.Beep(8000, 1000)
-
 import pyaudio
 import wave
 
 chunk = 1024  # Record in chunks of 1024 samples
 sample_format = pyaudio.paInt16  # 16 bits per sample
-channels = 2
+channels = 1
 fs = 44100  # Record at 44100 samples per second
 seconds = 3
 filename = "output.wav"
@@ -36,4 +31,15 @@ stream.close()
 # Terminate the PortAudio interface
 p.terminate()
 
+print(len(frames))
+print(len(frames[0]))
+
 print('Finished recording')
+
+# Save the recorded data as a WAV file
+wf = wave.open(filename, 'wb')
+wf.setnchannels(channels)
+wf.setsampwidth(p.get_sample_size(sample_format))
+wf.setframerate(fs)
+wf.writeframes(b''.join(frames))
+wf.close()
