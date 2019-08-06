@@ -4,8 +4,6 @@ from time import sleep
 import numpy as np
 import simpleaudio as sa
 
-
-
 data = [1, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 1, 0, 1, 0, 0, 0, 0]
 def modulate(data, freq):
 	sleep_time = (1/freq)
