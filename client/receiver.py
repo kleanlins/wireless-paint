@@ -1,12 +1,17 @@
 import pyaudio
 import wave
+import binascii
+from bitstring import BitArray
+from bitarray import bitarray
 
-chunk = 1024  # Record in chunks of 1024 samples
+from image_rcv import binary_to_image
+
+chunk = 1  # Record in chunks of 1024 samples
 sample_format = pyaudio.paInt16  # 16 bits per sample
 channels = 1
-fs = 44100  # Record at 44100 samples per second
+fs = 1000  # Record at 44100 samples per second
 seconds = 3
-filename = "output.wav"
+filename = "../static/output.wav"
 
 p = pyaudio.PyAudio()  # Create an interface to PortAudio
 
@@ -25,16 +30,31 @@ for i in range(0, int(fs / chunk * seconds)):
     data = stream.read(chunk)
     frames.append(data)
 
-# Stop and close the stream 
+# Stop and close the stream
 stream.stop_stream()
 stream.close()
 # Terminate the PortAudio interface
 p.terminate()
 
+bitstream = []
+
 print(len(frames))
-print(len(frames[0]))
+for each in frames:
+    a = BitArray(bytes=each, length=16)
+    # print(a)
+    # print(type(a.bin))
+    bitstream.append(a.bin)
 
 print('Finished recording')
+
+phase1 = bitstream[:1000]
+count = 0
+for each in phase1:
+    if(each[8:] == "11111111"):
+        count += 1
+
+print(count)
+
 
 # Save the recorded data as a WAV file
 wf = wave.open(filename, 'wb')
