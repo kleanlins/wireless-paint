@@ -3,6 +3,8 @@ import wave
 import binascii
 from bitstring import BitArray
 from bitarray import bitarray
+import matplotlib.pyplot as plt
+import numpy as np
 
 from image_rcv import binary_to_image
 
@@ -28,7 +30,12 @@ frames = []  # Initialize array to store frames
 # Store data in chunks for 3 seconds
 for i in range(0, int(fs / chunk * seconds)):
     data = stream.read(chunk)
-    frames.append(data)
+    a = BitArray(bytes=data, length=16)
+    # print(type(data))
+    frames.append(a.int)
+
+# frames = ''.join(frames)
+# amplitude = np.fromstring(frames, np.int16)
 
 # Stop and close the stream
 stream.stop_stream()
@@ -39,27 +46,24 @@ p.terminate()
 bitstream = []
 
 print(len(frames))
-for each in frames:
-    a = BitArray(bytes=each, length=16)
-    # print(a)
-    # print(type(a.bin))
-    bitstream.append(a.bin)
+# for each in frames:
+# a = BitArray(bytes=each, length=16)
+# print(a)
+# print(each)
+# print(a.int)
+# bitstream.append(a.bin)
 
 print('Finished recording')
 
-phase1 = bitstream[:1000]
-count = 0
-for each in phase1:
-    if(each[8:] == "11111111"):
-        count += 1
-
-print(count)
-
 
 # Save the recorded data as a WAV file
-wf = wave.open(filename, 'wb')
-wf.setnchannels(channels)
-wf.setsampwidth(p.get_sample_size(sample_format))
-wf.setframerate(fs)
-wf.writeframes(b''.join(frames))
-wf.close()
+# wf = wave.open(filename, 'wb')
+# wf.setnchannels(channels)
+# wf.setsampwidth(p.get_sample_size(sample_format))
+# wf.setframerate(fs)
+# wf.writeframes(b''.join(frames))
+# wf.close()
+
+t = [i for i in range(0, 3000)]
+plt.plot(t, frames)
+plt.show()
