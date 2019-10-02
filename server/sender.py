@@ -6,14 +6,14 @@ import simpleaudio as sa
 
 # data = [1, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 1, 0, 1, 0, 0, 0, 0]
 data = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
-data = [0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0]
+# data = [0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0]
 
 
 def modulate(data, freq):
     sleep_time = (1/freq)
     pulse = True
 
-    frequency = 1000  # Our played note will be 440 Hz
+    frequency = 240  # Our played note will be 440 Hz
     fs = 44100  # 44100 samples per second
     seconds = sleep_time  # Note duration of 0.1 seconds
 
@@ -43,4 +43,6 @@ def modulate(data, freq):
 # start_new_thread(clock,(frequency,))
 # sleep(1)
 
-# modulate(data, 10)
+bits_per_second = 10
+
+modulate(data, bits_per_second)
